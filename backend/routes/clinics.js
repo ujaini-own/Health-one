@@ -62,12 +62,12 @@ router.post('/', async (req, res) => {
             });
         }
 
-        // Check duplicates
-        const existingUser = await Clinic.findOne({ $or: [{ email }, { clinicRegistrationNumber }] });
+        // Check duplicates (by email only)
+        const existingUser = await Clinic.findOne({ email });
         if (existingUser) {
             return res.status(400).json({
                 success: false,
-                message: 'User with this email or registration number already exists'
+                message: 'User with this email already exists'
             });
         }
 

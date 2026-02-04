@@ -118,15 +118,13 @@ router.post('/signup/clinic', async (req, res) => {
             });
         }
 
-        // Check if clinic already exists
-        const existingClinic = await Clinic.findOne({
-            $or: [{ email }, { clinicRegistrationNumber }]
-        });
+        // Check if clinic user already exists (by email only)
+        const existingClinic = await Clinic.findOne({ email });
 
         if (existingClinic) {
             return res.status(400).json({
                 success: false,
-                message: 'Clinic with this email or registration number already exists'
+                message: 'User with this email already exists'
             });
         }
 
